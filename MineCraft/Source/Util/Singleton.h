@@ -1,19 +1,11 @@
 #ifndef Singleton_h
 #define Singleton_h
 
-class Singleton {
-public:
-    Singleton(const Singleton &) = delete;
+#include "NonCopyable.h"
+#include "NonMovable.h"
 
-    Singleton(Singleton &&) = delete;
+class Singleton : public NonMovable, public NonCopyable {
 
-    Singleton &operator=(const Singleton &) = delete;
-
-    Singleton &operator=(Singleton &&) = delete;
-
-protected:
-    Singleton() = default;
 };
-
 
 #endif /* Singleton_h */

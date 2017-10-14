@@ -1,5 +1,7 @@
 #include "Camera.hpp"
 
+#include "Maths/Matrix.hpp"
+
 Camera::Camera() {
     m_projectionMatrix = makeProjectionMatrix(90);
 

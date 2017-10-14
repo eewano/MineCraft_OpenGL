@@ -1,8 +1,7 @@
 #ifndef Model_hpp
 #define Model_hpp
 
-#include <GL/glew.h>
-#include <vector>
+#include "Mesh.h"
 
 #include "Util/NonCopyable.h"
 
@@ -10,15 +9,11 @@ class Model : public NonCopyable {
 public:
     Model() = default;
 
-    Model(const std::vector<GLfloat> &vertexPositions,
-            const std::vector<GLfloat> &textureCoords,
-            const std::vector<GLuint> &indices);
+    Model(const Mesh &mesh);
 
     ~Model();
 
-    void addData(const std::vector<GLfloat> &vertexPositions,
-            const std::vector<GLfloat> &textureCoords,
-            const std::vector<GLuint> &indices);
+    void addData(const Mesh &mesh);
 
     void deleteData();
 

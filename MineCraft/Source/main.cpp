@@ -1,6 +1,6 @@
 #include "Application.hpp"
 
-int main(int argc, const char *argv[]) {
+int main() {
 
     Application app("Minecraft");
     app.runLoop();
