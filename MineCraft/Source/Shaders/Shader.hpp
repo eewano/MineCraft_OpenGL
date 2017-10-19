@@ -2,23 +2,22 @@
 #define Shader_hpp
 
 #include <string>
-#include <GL/glew.h>
 
+#include "../GL/GLFunctions.hpp"
 #include "../Maths/glm.h"
-
 #include "../Util/NonCopyable.h"
 
 class Shader : NonCopyable {
 public:
     Shader(const std::string &vertexFile, const std::string &fragmentFile);
 
-    ~Shader();
+    virtual ~Shader();
 
     void useProgram() const;
 
     void loadInt(GLuint location, int value);
 
-    void loadFloat(GLuint location, int value);
+    void loadFloat(GLuint location, float value);
 
     void loadVector2(GLuint location, const glm::vec2 &vect);
 
