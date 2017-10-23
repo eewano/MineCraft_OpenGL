@@ -13,7 +13,7 @@ public:
 
     }
 
-    virtual ~StateBase() noexcept = default;
+    virtual ~StateBase() = default;
 
     virtual void handleEvent(sf::Event e) = 0;
 
@@ -22,6 +22,8 @@ public:
     virtual void update(float deltaTime) = 0;
 
     virtual void render(RenderMaster &renderer) = 0;
+
+    virtual void onOpen() = 0;
 
 protected:
     Application *m_pApplication;

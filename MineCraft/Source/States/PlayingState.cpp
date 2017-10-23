@@ -1,40 +1,98 @@
 #include "PlayingState.hpp"
 
-#include "../Renderer/RenderMaster.hpp"
 #include "../Application.hpp"
-
-#include "../World/Chunk/ChunkMeshBuilder.hpp"
+#include "../Maths/Ray.hpp"
+#include "../Renderer/RenderMaster.hpp"
+#include "../World/Event/PlayerDigEvent.hpp"
 
 #include <iostream>
 
-StatePlaying::StatePlaying(Application &app)
-        : StateBase(app) {
+std::shared_ptr<SkyManager> m_sky;
+
+StatePlaying::StatePlaying(Application &app, const Config &config)
+        : StateBase(app), m_world(app.getCamera(), config, m_player) {
     app.getCamera().hookEntity(m_player);
 
-    ChunkMeshBuilder builder(m_chunkTest);
-    builder.buildMesh(m_chunkTest.mesh);
+    m_chTexture.loadFromFile("Res/Textures/ch.png");
+    m_crosshair.setTexture(&m_chTexture);
+    m_crosshair.setSize({21, 21});
+    m_crosshair.setOrigin(m_crosshair.getGlobalBounds().width / 2,
+            m_crosshair.getGlobalBounds().height / 2);
+    m_crosshair.setPosition(app.getWindow().getSize().x / 2,
+            app.getWindow().getSize().y / 2);
 
-    m_chunkTest.mesh.bufferMesh();
+    m_tickManager = std::make_unique<TickManager>();
+    m_tickThread = std::make_unique<std::thread>(std::bind(&TickManager::run, m_tickManager.get_deleter()));
+
+    m_sky = std::make_unique<SkyManager>();
+    m_tickManager->add(m_sky);
 }
 
 void StatePlaying::handleEvent(sf::Event e) {
 
 }
 
+StatePlaying::~StatePlaying() {
+    m_tickThread->join();
+}
+
 void StatePlaying::handleInput() {
     m_player.handleInput(m_pApplication->getWindow());
+
+    static sf::Clock timer;
+    glm::vec3 lastPosition;
+
+    for (Ray ray({m_player.position.x, m_player.position.y + 0.6f, m_player.position.z}, m_player.rotation);
+         ray.getLength() < 6;
+         ray.step(0.05)) {
+        int x = ray.getEnd().x;
+        int y = ray.getEnd().y;
+        int z = ray.getEnd().z;
+
+        auto block = m_world.getBlock(x, y, z);
+        auto id = (BlockId) block.id;
+
+        if (id != BlockId::Air && id != BlockId::Water) {
+            if (timer.getElapsedTime().asSeconds() > 0.2) {
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                    timer.restart();
+                    m_world.addEvent<PlayerDigEvent>(sf::Mouse::Left, ray.getEnd(), m_player);
+                    break;
+                } else if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+                    timer.restart();
+                    m_world.addEvent<PlayerDigEvent>(sf::Mouse::Right, lastPosition, m_player);
+                    break;
+                }
+            }
+        }
+        lastPosition = ray.getEnd();
+    }
 }
 
 void StatePlaying::update(float deltaTime) {
-    std::cout << "X: " << (int) m_player.position.x
-              << " Y: " << (int) m_player.position.y
-              << " Z: " << (int) m_player.position.z
-              << "\n";
+    if (m_player.position.x < 0) {
+        m_player.position.x = 0;
+    }
+    if (m_player.position.z < 0) {
+        m_player.position.z = 0;
+    }
 
-    m_player.update(deltaTime);
+    m_fpsCounter.update();
+    m_player.update(deltaTime, m_world);
+    m_world.update(m_pApplication->getCamera());
+
+    m_sky->Update(m_player.position);
 }
 
 void StatePlaying::render(RenderMaster &renderer) {
-    renderer.drawCube({-1.1, 0, -1.1});
-    renderer.drawChunk(m_chunkTest.mesh);
+    static sf::Clock dt;
+
+    m_fpsCounter.draw(renderer);
+    renderer.drawSFML(m_crosshair);
+    m_player.draw(renderer);
+    m_world.renderWorld(renderer, m_pApplication->getCamera());
+}
+
+void StatePlaying::onOpen() {
+    m_pApplication->turnOffMouse();
 }
