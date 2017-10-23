@@ -7,7 +7,7 @@
 
 #include "../Util/NonCopyable.h"
 
-class BasicTexture {
+class BasicTexture : public NonCopyable {
 public:
     BasicTexture() = default;
 
