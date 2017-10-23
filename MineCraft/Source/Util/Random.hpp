@@ -26,8 +26,8 @@ private:
 template<typename REngine = std::mt19937>
 class Random {
 public:
-    Random() {
-        m_randomEngine.seed(std::time(nullptr));
+    Random(int n = std::time(nullptr)) {
+        m_randomEngine.seed(n);
         for (int i = 0; i < 5; i++) {
             intInRange(i, i * 5);
         }
@@ -38,6 +38,10 @@ public:
         static_assert(std::is_integral<T>::value, "Not integral type!");
         std::uniform_int_distribution<T> dist(low, high);
         return dist(m_randomEngine);
+    }
+
+    void setSeed(int seed) {
+        m_randomEngine.seed(seed);
     }
 
 private:
