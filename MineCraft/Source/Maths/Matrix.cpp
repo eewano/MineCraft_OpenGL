@@ -3,6 +3,8 @@
 #include "../Camera.hpp"
 #include "../Entity.h"
 
+#include "../Config.h"
+
 glm::mat4 makeModelMatrix(const Entity &entity) {
     glm::mat4 matrix;
 
@@ -27,6 +29,10 @@ glm::mat4 makeViewMatrix(const Camera &camera) {
     return matrix;
 }
 
-glm::mat4 makeProjectionMatrix(float fov) {
-    return glm::perspective(glm::radians(fov), 1280.0f / 720.0f, 0.1f, 1000.0f);
+glm::mat4 makeProjectionMatrix(const Config &config) {
+    float x = config.windowX;
+    float y = config.windowY;
+    float fov = config.fov;
+
+    return glm::perspective(glm::radians(fov), x / y, 0.1f, 2000.0f);
 }

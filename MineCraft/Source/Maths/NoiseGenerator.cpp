@@ -55,7 +55,7 @@ double NoiseGenerator::noise(double x, double z) const noexcept {
     return rec3;
 }
 
-double NoiseGenerator::getHeight(int x, int y, int z, int chunkX, int chunkZ) const noexcept {
+double NoiseGenerator::getHeight(int x, int z, int chunkX, int chunkZ) const noexcept {
     auto newX = (x + (chunkX * CHUNK_SIZE));
     auto newZ = (z + (chunkZ * CHUNK_SIZE));
 
@@ -69,7 +69,9 @@ double NoiseGenerator::getHeight(int x, int y, int z, int chunkX, int chunkZ) co
     for (auto a = 0; a < m_noiseParameters.octaves - 1; a++) {
         auto frequency = pow(2.0, a); //This increases the frequency with every loop of the octave.
         auto amplitude = pow(m_noiseParameters.roughness, a); //This decreases the amplitude with every loop of the octave.
-        totalValue += noise(((double) newX) * frequency / m_noiseParameters.smoothness, ((double) newZ) * frequency / m_noiseParameters.smoothness) * amplitude;
+        totalValue += noise(((double) newX) * frequency / m_noiseParameters.smoothness,
+                ((double) newZ) * frequency / m_noiseParameters.smoothness)
+                * amplitude;
     }
 
     auto val = (((totalValue / 2.1) + 1.2) * m_noiseParameters.amplitude) + m_noiseParameters.heightOffset;
