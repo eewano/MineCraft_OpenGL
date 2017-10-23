@@ -9,10 +9,11 @@
 
 #include "Context.hpp"
 #include "Camera.hpp"
+#include "GlobalInfo.hpp"
 
 class Application {
 public:
-    Application(std::string &&name);
+    Application(const Config &config);
 
     void runLoop();
 
@@ -20,6 +21,7 @@ public:
     void pushState(Args &&... args) {
         m_states.push_back(std::make_unique<T>(std::forward<Args>(args)...));
         auto &s = m_states.back();
+        s->onOpen();
     }
 
     void popState();
@@ -32,6 +34,10 @@ public:
         return m_context.window;
     }
 
+    void turnOffMouse();
+
+    void turnOnMouse();
+
 private:
     void handleEvents();
 
@@ -40,6 +46,8 @@ private:
     Context m_context;
     RenderMaster m_masterRenderer;
     Camera m_camera;
+
+    const Config &m_config;
 
     bool m_isPopState = false;
 };

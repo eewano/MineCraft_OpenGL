@@ -3,8 +3,12 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Config.h"
+
+extern sf::RenderWindow *g_window;
+
 struct Context {
-    Context();
+    Context(const Config &config);
 
     sf::RenderWindow window;
 };

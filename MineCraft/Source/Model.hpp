@@ -5,6 +5,8 @@
 
 #include "Util/NonCopyable.h"
 
+#include "Renderer/RenderInfo.h"
+
 class Model : public NonCopyable {
 public:
     Model() = default;
@@ -13,9 +15,17 @@ public:
 
     ~Model();
 
+    Model(Model &&other);
+
+    Model &operator=(Model &&other);
+
     void addData(const Mesh &mesh);
 
     void deleteData();
+
+    void genVAO();
+
+    void addEBO(const std::vector<GLuint> &indices);
 
     void addVBO(int dimensions, const std::vector<GLfloat> &data);
 
@@ -23,12 +33,12 @@ public:
 
     int getIndicesCount() const;
 
-private:
-    void addEBO(const std::vector<GLuint> &indices);
+    const RenderInfo &getRenderInfo() const;
 
-    GLuint m_vao = 0;
+private:
+    RenderInfo m_renderInfo;
+
     int m_vboCount = 0;
-    int m_indicesCount = 0;
     std::vector<GLuint> m_buffers;
 };
 

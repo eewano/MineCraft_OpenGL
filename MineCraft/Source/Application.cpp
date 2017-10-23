@@ -1,15 +1,25 @@
 #include "Application.hpp"
+#include <iostream>
 #include "States/PlayingState.hpp"
+#include "World/Block/BlockDatabase.hpp"
 
-Application::Application(std::string &&name) {
-    pushState<StatePlaying>(*this);
+Application::Application(const Config &config)
+        : m_context(config), m_camera(config), m_config(config) {
+    BlockDatabase::get();
+    pushState<StatePlaying>(*this, config);
 }
 
 void Application::runLoop() {
     sf::Clock dtTimer;
+    sf::Clock dt;
+
+    m_masterRenderer.setConfig(m_config);
+
+    sf::Time m;
 
     while (m_context.window.isOpen() && !m_states.empty()) {
         auto deltaTime = dtTimer.restart();
+        g_info.deltaTime = deltaTime.asSeconds();
         auto &state = *m_states.back();
 
         state.handleInput();
@@ -24,6 +34,9 @@ void Application::runLoop() {
             m_isPopState = false;
             m_states.pop_back();
         }
+
+        m = dt.restart();
+        g_info.elapsedTime += m.asSeconds();
     }
 }
 
@@ -54,4 +67,12 @@ void Application::handleEvents() {
 
 void Application::popState() {
     m_isPopState = true;
+}
+
+void Application::turnOffMouse() {
+    m_context.window.setMouseCursorVisible(false);
+}
+
+void Application::turnOnMouse() {
+    m_context.window.setMouseCursorVisible(true);
 }
