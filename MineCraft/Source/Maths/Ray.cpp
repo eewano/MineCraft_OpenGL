@@ -16,7 +16,7 @@ void Ray::step(float scale) {
     p.z -= glm::tan(pitch) * scale;
 }
 
-const glm::vec3 &Ray::getend() const {
+const glm::vec3 &Ray::getEnd() const {
     return m_rayEnd;
 }
 

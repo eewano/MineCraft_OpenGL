@@ -9,7 +9,7 @@ public:
 
     void step(float scale);
 
-    const glm::vec3 &getend() const;
+    const glm::vec3 &getEnd() const;
 
     float getLength() const;
 
