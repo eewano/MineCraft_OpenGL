@@ -1,8 +1,6 @@
 #ifndef RenderInfo_h
 #define RenderInfo_h
 
-#import <GL/glew.h>
-
 struct RenderInfo {
     GLuint vao = 0;
     GLuint indicesCount = 0;

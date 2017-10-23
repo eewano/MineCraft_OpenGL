@@ -11,16 +11,18 @@
 
 class Camera;
 
+struct Entity;
+
 class CubeRenderer {
 public:
     CubeRenderer();
 
-    void add(const glm::vec3 &position);
+    void add(const Entity &entity);
 
     void render(const Camera &camera);
 
 private:
-    std::vector<glm::vec3> m_quads;
+    std::vector<const Entity *> m_cubes;
 
     Model m_cubeModel;
     BasicShader m_shader;

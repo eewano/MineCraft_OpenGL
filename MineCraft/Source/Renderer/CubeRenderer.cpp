@@ -82,12 +82,14 @@ CubeRenderer::CubeRenderer()
     m_cubeModel.addData({vertexCoords, texCoords, indices});
 }
 
-void CubeRenderer::add(const glm::vec3 &position) {
-    m_quads.push_back(position);
+void CubeRenderer::add(const Entity &entity) {
+    m_cubes.push_back(&entity);
 }
 
 void CubeRenderer::render(const Camera &camera) {
-//    glEnable(GL_CULL_FACE);
+    if (m_cubes.empty()) {
+        return;
+    }
 
     m_shader.useProgram();
     m_cubeModel.bindVAO();
@@ -95,11 +97,10 @@ void CubeRenderer::render(const Camera &camera) {
 
     m_shader.loadProjectionViewMatrix(camera.getProjectionViewMatrix());
 
-    for (auto &quad : m_quads) {
-        m_shader.loadModelMatrix(makeModelMatrix({quad, {0, 0, 0}}));
-
-        glDrawElements(GL_TRIANGLES, m_cubeModel.getIndicesCount(), GL_UNSIGNED_INT, nullptr);
+    for (auto &cube : m_cubes) {
+        m_shader.loadModelMatrix(makeModelMatrix(*cube));
+        GL::drawElements(m_cubeModel.getIndicesCount());
     }
 
-    m_quads.clear();
+    m_cubes.clear();
 }

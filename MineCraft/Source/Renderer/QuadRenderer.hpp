@@ -5,8 +5,9 @@
 
 #include "../Model.hpp"
 #include "../Maths/glm.h"
-#include "../Shaders/BasicShader.hpp"
+#include "../Shaders/PostProcessShader.hpp"
 #include "../Texture/BasicTexture.hpp"
+#include "../Config.h"
 
 class Camera;
 
@@ -16,13 +17,13 @@ public:
 
     void add(const glm::vec3 &position);
 
-    void renderQuads(const Camera &camera);
+    void render(const Camera &camera, Config *conf);
 
 private:
     std::vector<glm::vec3> m_quads;
 
     Model m_quadModel;
-    BasicShader m_shader;
+    PostProcessShader m_shader;
     BasicTexture m_basicTexture;
 };
 
