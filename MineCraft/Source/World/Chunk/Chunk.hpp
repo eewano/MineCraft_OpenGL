@@ -22,7 +22,7 @@ public:
 
     void setBlock(int x, int y, int z, ChunkBlock block) override;
 
-    ChunkBlock getBlock(int x, int y, int z) const override;
+    ChunkBlock getBlock(int x, int y, int z) const noexcept override;
 
     int getHeightAt(int x, int z);
 

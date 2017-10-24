@@ -1,8 +1,6 @@
 #ifndef IChunk_h
 #define IChunk_h
 
-#import "ChunkBlock.hpp"
-
 struct IChunk {
     virtual ~IChunk() = default;
 

@@ -3,26 +3,39 @@
 
 #include "../../Model.hpp"
 
+#include <array>
 #include <vector>
 #include <SFML/Graphics.hpp>
 
 class ChunkMesh {
 public:
-    ChunkMesh();
+    ChunkMesh() = default;
 
-    void addFace(const std::vector<GLfloat> &blockFace,
-            const std::vector<GLfloat> &textureCoords,
+    void addFace(const std::array<GLfloat, 12> &blockFace,
+            const std::array<GLfloat, 8> &textureCoords,
             const sf::Vector3i &chunkPosition,
-            const sf::Vector3i &blockPosition);
+            const sf::Vector3i &blockPosition,
+            GLfloat cardinalLight);
 
     void bufferMesh();
 
     const Model &getModel() const;
 
+    void deleteData();
+
+    int faces = 0;
+
 private:
     Mesh m_mesh;
     Model m_model;
+    std::vector<GLfloat> m_cardinalLight;
     GLuint m_indexIndex = 0;
+};
+
+struct ChunkMeshCollection {
+    ChunkMesh solidMesh;
+    ChunkMesh waterMesh;
+    ChunkMesh floraMesh;
 };
 
 #endif /* ChunkMesh_hpp */

@@ -33,6 +33,14 @@ bool ChunkManager::makeMesh(int x, int z, const Camera &camera) {
     return getChunk(x, z).makeMesh(camera);
 }
 
+bool ChunkManager::chunkLoadedAt(int x, int z) const {
+    if (!chunkExistsAt(x, z)) {
+        return false;
+    }
+
+    return m_chunks.at({x, z}).hasLoaded();
+}
+
 bool ChunkManager::chunkExistsAt(int x, int z) const {
     return m_chunks.find({x, z}) != m_chunks.end();
 }
