@@ -3,7 +3,7 @@
 
 #include "BlockId.h"
 
-class BlockData;
+struct BlockDataHolder;
 
 class BlockType;
 
@@ -14,15 +14,19 @@ struct ChunkBlock {
 
     ChunkBlock(BlockId id);
 
-    const BlockData &getData() const;
+    const BlockDataHolder &getData() const;
 
     const BlockType &getType() const;
 
-    bool operator==(ChunkBlock other) {
+    bool operator==(ChunkBlock other) const {
         return id == other.id;
     }
 
-    Block_t id = 1;
+    bool operator!=(ChunkBlock other) const {
+        return id != other.id;
+    }
+
+    Block_t id = 0;
 };
 
 #endif /* ChunkBlock_hpp */

@@ -29,6 +29,22 @@ BlockData::BlockData(const std::string &fileName) {
             m_data.texTopCoord = {x, y};
             m_data.texSideCoord = {x, y};
             m_data.texBottomCoord = {x, y};
+        } else if (line == "Id") {
+            int id;
+            inFile >> id;
+            m_data.id = static_cast<BlockId>(id);
+        } else if (line == "Opaque") {
+            inFile >> m_data.isOpaque;
+        } else if (line == "Collidable") {
+            inFile >> m_data.isCollidable;
+        } else if (line == "MeshType") {
+            int id;
+            inFile >> id;
+            m_data.meshType = static_cast<BlockMeshType>(id);
+        } else if (line == "ShaderType") {
+            int id;
+            inFile >> id;
+            m_data.shaderType = static_cast<BlockShaderType>(id);
         }
     }
 }
