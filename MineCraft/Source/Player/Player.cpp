@@ -17,7 +17,7 @@ Player::Player()
           m_itemDown(sf::Keyboard::Down),
           m_itemUp(sf::Keyboard::Up),
           m_flyKey(sf::Keyboard::F) {
-    for (int i =; i < 5; i++) {
+    for (int i = 0; i < 5; i++) {
         m_inventoryJumps.emplace_back((sf::Keyboard::Key(sf::Keyboard::Num1 + i)));
     }
 
