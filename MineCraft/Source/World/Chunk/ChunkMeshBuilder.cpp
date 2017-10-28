@@ -53,6 +53,20 @@ namespace {
             0, 0, 1
     };
 
+    const std::array<GLfloat, 12> xFace1{
+            0, 0, 0,
+            1, 0, 1,
+            1, 1, 1,
+            0, 1, 0,
+    };
+
+    const std::array<GLfloat, 12> xFace2{
+            0, 0, 1,
+            1, 0, 0,
+            1, 1, 0,
+            0, 1, 1,
+    };
+
     constexpr GLfloat LIGHT_TOP = 1.0f;
     constexpr GLfloat LIGHT_X = 0.8f;
     constexpr GLfloat LIGHT_Z = 0.6f;
