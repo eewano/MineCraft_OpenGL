@@ -61,8 +61,7 @@ void ClassicOverWorldGenerator::getHeightIn(int xMin, int zMin, int xMax, int zM
     auto getHeightAt = [&](int x, int z) {
         const Biome &biome = getBiome(x, z);
 
-        return;
-        biome.getHeight(x, z, m_pChunk->getLocation().x, m_pChunk->getLocation().y);
+        return biome.getHeight(x, z, m_pChunk->getLocation().x, m_pChunk->getLocation().y);
     };
 
     int bottomLeft = getHeightAt(xMin, zMin);
