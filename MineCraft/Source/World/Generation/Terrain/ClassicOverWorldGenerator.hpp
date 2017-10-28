@@ -6,7 +6,7 @@
 #include "../../../Util/Array2D.h"
 #include "../../../Util/Random.hpp"
 
-#include "../../../Maths/NoiseGenerator.hpp
+#include "../../../Maths/NoiseGenerator.hpp"
 #include "../../WorldConstants.h"
 
 #include "../Biome/GrasslandBiome.hpp"
