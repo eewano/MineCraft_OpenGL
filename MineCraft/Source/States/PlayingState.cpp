@@ -22,7 +22,7 @@ StatePlaying::StatePlaying(Application &app, const Config &config)
             app.getWindow().getSize().y / 2);
 
     m_tickManager = std::make_unique<TickManager>();
-    m_tickThread = std::make_unique<std::thread>(std::bind(&TickManager::run, m_tickManager.get_deleter()));
+    m_tickThread = std::make_unique<std::thread>(std::bind(&TickManager::run, m_tickManager.get()));
 
     m_sky = std::make_unique<SkyManager>();
     m_tickManager->add(m_sky);
