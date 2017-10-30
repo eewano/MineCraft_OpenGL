@@ -16,7 +16,7 @@ public:
     void makeTree(Rand &rand, Chunk &chunk, int x, int y, int z) const override;
 
 private:
-    NoiseParameters getNoiseParameters();
+    NoiseParameters getNoiseParameters() override;
 };
 
 #endif /* TemperateForestBiome_hpp */
