@@ -6,12 +6,13 @@ sf::RenderWindow *g_window;
 
 Context::Context(const Config &config) {
     sf::ContextSettings settings;
+    settings.depthBits = 24;
+    settings.stencilBits = 8;
     settings.antialiasingLevel = 0;
     settings.majorVersion = 3;
     settings.minorVersion = 3;
-    settings.depthBits = 24;
-    settings.stencilBits = 8;
-//    settings.attributeFlags = sf::ContextSettings::Core;
+    settings.attributeFlags = sf::ContextSettings::Core;
+    settings.sRgbCapable = false;
     //This is no longer necessary due to the Mac support update.
 
     if (config.isFullscreen) {

@@ -6,7 +6,7 @@
 #include <sstream>
 #include <iomanip>
 
-#include "../world/World.hpp"
+#include "../World/World.hpp"
 
 #include "../Renderer/RenderMaster.hpp"
 

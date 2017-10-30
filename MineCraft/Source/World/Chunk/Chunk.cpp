@@ -41,7 +41,7 @@ void Chunk::setBlock(int x, int y, int z, ChunkBlock block) {
     }
 
     if (m_isLoaded) {
-//        m_pWorld->updateChunk(x, y, z);
+        m_pWorld->updateChunk(x, y, z); //
     }
 }
 
@@ -129,7 +129,7 @@ void Chunk::deleteMeshes() {
 }
 
 void Chunk::addSection() {
-    int y = m_chunks.size();
+    int y = (int) m_chunks.size();
     m_chunks.emplace_back(sf::Vector3i(m_location.x, y, m_location.y), *m_pWorld);
 }
 
