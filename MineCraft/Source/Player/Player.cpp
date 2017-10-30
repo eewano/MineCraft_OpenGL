@@ -72,7 +72,7 @@ void Player::handleInput(const sf::RenderWindow &window) {
     } else if (m_itemUp.isKeyPressed()) {
         m_heldItem--;
         if (m_heldItem == -1) {
-            m_heldItem = m_items.size() - 1;
+            m_heldItem = (int) m_items.size() - 1;
         }
     }
 
@@ -216,7 +216,10 @@ void Player::mouseInput(const sf::RenderWindow &window) {
 
     lastMousePosition = sf::Mouse::getPosition(window);
 
-    if (lastMousePosition.x < 10 || lastMousePosition.x > window.getSize().x - 10 || lastMousePosition.y < 10 || lastMousePosition.y > window.getSize().y - 10) {
+    if (lastMousePosition.x < 10 ||
+        lastMousePosition.x > window.getSize().x - 10 ||
+        lastMousePosition.y < 10 ||
+        lastMousePosition.y > window.getSize().y - 10) {
         sf::Mouse::setPosition(center);
         lastMousePosition = center;
     }
