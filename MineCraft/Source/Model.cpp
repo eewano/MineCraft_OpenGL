@@ -70,7 +70,7 @@ void Model::addVBO(int dimensions, const std::vector<GLfloat> &data) {
 }
 
 void Model::addEBO(const std::vector<GLuint> &indices) {
-    m_renderInfo.indicesCount = indices.size();
+    m_renderInfo.indicesCount = (unsigned int) indices.size();
     GLuint ebo;
     glGenBuffers(1, &ebo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
@@ -85,7 +85,7 @@ void Model::deleteData() {
         glDeleteVertexArrays(1, &m_renderInfo.vao);
     }
     if (m_buffers.size() > 0) {
-        glDeleteBuffers(m_buffers.size(), m_buffers.data());
+        glDeleteBuffers((GLsizei) m_buffers.size(), m_buffers.data());
     }
 
     m_buffers.clear();
