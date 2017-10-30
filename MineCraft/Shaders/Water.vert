@@ -13,7 +13,7 @@ uniform mat4 projViewMatrix;
 uniform mat4 normalMatrix;
 uniform float globalTime;
 
-vec4 getworldPos() {
+vec4 getWorldPos() {
     vec3 inVert = inVertexPosition.xyz;
     inVert.y += sin((globalTime + inVert.x) * 2.3) / 16.8f;
     inVert.y += cos((globalTime + inVert.z) * 2.3) / 16.1f;

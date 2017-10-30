@@ -21,7 +21,7 @@ const vec3 horizonColorMoonRise = vec3(0.5, 0.45, 0.65);
 
 vec3 getColor(float time, vec4 vertex) {
     if(vertex.w == 1 || vertex.w == 2){
-        if(daytime < 1500) { //6am - 9am sun gets brighter
+        if(dayTime < 1500) { //6am - 9am sun gets brighter
             return mix(zenithColorMoonRise, zenithColorDay, dayTime / 1500);
         }
         if(dayTime >= 1500 && dayTime < 10500) { //9am - 3pm sun is brightest
@@ -36,7 +36,7 @@ vec3 getColor(float time, vec4 vertex) {
         if(dayTime >= 13500 && dayTime < 22500) { //9pm - 3am is night
             return zenithColorNight;
         }
-        if(daytime >= 22500 && dayTime < 24000) {
+        if(dayTime >= 22500 && dayTime < 24000) {
             return mix(zenithColorNight, zenithColorMoonRise, (dayTime - 22500) / 1500);
         }
     } else if(vertex.w == 0 || vertex.w == 3) {

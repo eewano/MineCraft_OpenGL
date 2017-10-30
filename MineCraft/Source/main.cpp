@@ -63,7 +63,7 @@ namespace {
                 } else if (key == "contrast") {
                     configFile >> config.contrast;
                     std::cout << "Config: Contrast: " << config.contrast << std::endl;
-                } else if (key == "post process") {
+                } else if (key == "postprocess") {
                     configFile >> config.postProcess;
                     std::cout << "Post Processing: " << config.postProcess << std::endl;
                 }

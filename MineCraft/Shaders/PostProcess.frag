@@ -1,7 +1,7 @@
 #version 330
 
 out vec4 outColour;
-in Vec2 passTextureCoord;
+in vec2 passTextureCoord;
 
 uniform sampler2D texSampler;
 uniform vec2 resolution;
